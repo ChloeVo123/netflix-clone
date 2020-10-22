@@ -1,0 +1,72 @@
+Get TMDB API key 
+    https://www.themoviedb.org/ 
+    Request AP key from TMDB 
+    6a996acfd09bdefa7bb44e410e60592e
+    https://api.themoviedb.org/3/movie/550?api_key=6a996acfd09bdefa7bb44e410e60592e
+Get all the movies
+    npm install axios
+    Axios is a popular, promise-based HTTP client that sports an easy-to-use API and can be used in both the browser and Node. js. 
+    Making HTTP requests to fetch or save data is one of the most common tasks a client-side JavaScript application will need to do.
+    create requests.js 
+        const API_KEY = "6a996acfd09bdefa7bb44e410e60592e";
+        const requests = {
+        fetchTrending: `/treding/all/week?api_key=${API_KEY}&language=en-US`,
+        fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
+        fetchTopRated: `/movie/top_rated?api_key=${API_KEY}&language=en-US`,
+        fetchActionMovies: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
+        fetchComedyMovies: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
+        fetchHorrorMovies: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
+        fetchRomanceMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
+        fetchDocumentaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
+        }
+
+    create axios.js 
+
+Build Rows
+    useEffect(() => {
+        async function fetchData() {
+            const request = await axios.get(fetchUrl);
+            setMovies(request.data.results)
+            return request;
+        }
+        fetchData();
+    }, [fetchUrl]);
+        => fetchUrl is a dependence. we have used variable passed outside of the block, we have to tell useEffect that they use something outside block
+    whenever fetchUrl change useEffect will run again, if not it wont render the useEfect -> crash
+
+    src = needs url not file name with its extension -> solution adding a baseUrl
+        src={`${base_url}${movie.poster_path}`}
+
+    HOVER 
+        .row__poster {
+        transition: transform 450ms; -> a bit delay when changing img size
+    }
+
+    .row__poster:hover {
+        transform: scale(1.08);
+    }
+
+    .row__posters {
+        display: flex;
+        overflow-y: hidden;
+        overflow-x: scroll;
+        padding: 20px;    
+    }
+
+    .row__posters::-webkit-scrollbar {
+        display: none;
+    }
+Build Banner 
+    GET 1 ITEM RANDOMLY 
+         setMovie(
+                request.data.results[
+                    Math.floor(Math.random() * request.data.results.lemgth - 1)
+                ]
+            )
+Build Nav Bar 
+    function to create 3 dots in the movie description 
+
+Add Trailer Pop up 
+    npm install react-player
+    npm install react-youtube
+    npm i -S react-flip-move
